@@ -78,7 +78,7 @@
   };
 
   _.reduce = function(collection, iterator, accumulator) {
-    var accumulator = accumulator === undefined? collection.shift() : accumulator
+    var accumulator = accumulator === undefined? collection.shift() : accumulator;
     _.each(collection, function(item) {
       accumulator = iterator(accumulator, item)
     });
@@ -222,22 +222,54 @@
   _.zip = function() {
   };
 
+
   // Takes a multidimensional array and converts it to a one-dimensional array.
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    var result = [];
+    _.each(nestedArray, function (element) {
+        if (Array.isArray(element)) {
+            result = result.concat(_.flatten(element))
+          } else {
+            result.push(element)
+          }
+    })
+    return result;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    
+    var args = [].slice.call(arguments),
+
+        allValues = _.uniq(_.flatten(args)),
+        allSharedValues = _.filter(allValues, function (value) {
+          return !!_.every(args, function (argument) {
+            return !!_.contains(argument, value);
+          });
+        });
+
+        return allSharedValues;
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+
+    var args = [].slice.call(arguments),
+        firstArray = args[0],
+        remainingArrays = args.slice(1);
+
+    return _.filter(firstArray, function (value) {
+      return !!_.every(remainingArrays, function (array) {
+        return !!_.contains(array, value) === false;
+      });
+    });
   };
+
 
   // Returns a function, that, when invoked, will only be triggered at most once
   // during a given window of time.  See the Underbar readme for extra details
