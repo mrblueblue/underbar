@@ -205,7 +205,15 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    return _.map(collection, function(value){
+      if (typeof functionOrKey === 'function') {
+        return functionOrKey.apply(value, args);
+        } else {
+        return value[functionOrKey].apply(value, args);
+      }
+    });
   };
+
 
   // Sort the object's values by a criterion produced by an iterator.
   // If iterator is a string, sort objects by that property with the name
@@ -228,7 +236,9 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+
     var result = [];
+
     _.each(nestedArray, function (element) {
         if (Array.isArray(element)) {
             result = result.concat(_.flatten(element))
@@ -236,13 +246,14 @@
             result.push(element)
           }
     })
+
     return result;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
-    
+
     var args = [].slice.call(arguments),
 
         allValues = _.uniq(_.flatten(args)),
