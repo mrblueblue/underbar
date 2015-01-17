@@ -168,16 +168,14 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-
-    var memo = {};
-
+    var memo = {};  
     return function() {
-      var arg = arguments[0];
-      if (!!(arg in memo)) {
-        memo[arg] = func.call(this, arg);
-      }
-      return memo[arg];
-    }
+        var args = [].slice.call(arguments)
+        if (!(args in memo)) {
+            memo[args] = func.apply(this, args)
+        }
+        return memo[args]      
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -189,10 +187,8 @@
  
 
   _.delay = function(func, wait) {
-
     // arguments for func are all arguments after the 2nd argument for delay
     var args = [].slice.call(arguments, 2, arguments.length);
-
     setTimeout(function() {
       return func.apply(this, args);
     }, wait);
@@ -210,10 +206,8 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-
     var copy = array.slice();
     var result = [];
-
     while (copy.length > 0) {
       var index = Math.random() * copy.length;
       result.push(copy.splice(index, 1)[0]);
@@ -264,9 +258,7 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
-
     var result = [];
-
     _.each(nestedArray, function (element) {
         if (Array.isArray(element)) {
             result = result.concat(_.flatten(element))
@@ -281,27 +273,22 @@
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
-
     var args = [].slice.call(arguments);
-
     var allValues = _.uniq(_.flatten(args));
     var allSharedValues = _.filter(allValues, function (value) {
           return !!_.every(args, function (argument) {
             return !!_.contains(argument, value);
           });
         });
-
         return allSharedValues;
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
-
     var args = [].slice.call(arguments);
     var firstArray = args[0];
     var remainingArrays = args.slice(1);
-
     return _.filter(firstArray, function (value) {
       return !!_.every(remainingArrays, function (array) {
         return !!_.contains(array, value) === false;
