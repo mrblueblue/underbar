@@ -127,17 +127,6 @@
     return obj;
   };
 
-
-  /**
-   * FUNCTIONS
-   * =========
-   *
-   * Now we're getting into function decorators, which take in any function
-   * and return out a new version of the function that works somewhat differently
-   */
-
-  // Return a function that can be called at most one time. Subsequent calls
-  // should return the previously returned value.
   _.once = function(func) {
     // TIP: These variables are stored in a "closure scope" (worth researching),
     // so that they'll remain available to the newly-generated function every
@@ -159,14 +148,6 @@
     };
   };
 
-  // Memorize an expensive function's results by storing them. You may assume
-  // that the function takes only one argument and that it is a primitive.
-  // memoize could be renamed to oncePerUniqueArgumentList; memoize does the
-  // same thing as once, but based on many sets of unique arguments.
-  //
-  // _.memoize should return a function that, when called, will check if it has
-  // already computed the result for the given argument and return that value
-  // instead if possible.
   _.memoize = function(func) {
     var memo = {};  
     return function() {
@@ -178,33 +159,14 @@
     };
   };
 
-  // Delays a function for the given number of milliseconds, and then calls
-  // it with the arguments supplied.
-  //
-  // The arguments for the original function are passed after the wait
-  // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
-  // call someFunction('a', 'b') after 500ms
- 
-
   _.delay = function(func, wait) {
     // arguments for func are all arguments after the 2nd argument for delay
-    var args = [].slice.call(arguments, 2, arguments.length);
+    var args = [].slice.call(arguments, 2);
     setTimeout(function() {
       return func.apply(this, args);
     }, wait);
   };
 
-
-  /**
-   * ADVANCED COLLECTION OPERATIONS
-   * ==============================
-   */
-
-  // Randomizes the order of an array's contents.
-  //
-  // TIP: This function's test suite will ask that you not modify the original
-  // input array. For a tip on how to make a copy of an array, see:
-  // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
     var copy = array.slice();
     var result = [];
@@ -215,17 +177,6 @@
       return result;
   };
 
-
-  /**
-   * EXTRA CREDIT
-   * =================
-   *
-   * Note: This is the end of the pre-course curriculum. Feel free to continue,
-   * but nothing beyond here is required.
-   */
-
-  // Calls the method named by functionOrKey on each value in the list.
-  // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
     return _.map(collection, function(value){
       if (typeof functionOrKey === 'function') {
@@ -252,11 +203,6 @@
   _.zip = function() {
   };
 
-
-  // Takes a multidimensional array and converts it to a one-dimensional array.
-  // The new array should contain all elements of the multidimensional array.
-  //
-  // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
     var result = [];
     _.each(nestedArray, function (element) {
@@ -270,8 +216,6 @@
     return result;
   };
 
-  // Takes an arbitrary number of arrays and produces an array that contains
-  // every item shared between all the passed-in arrays.
   _.intersection = function() {
     var args = [].slice.call(arguments);
     var allValues = _.uniq(_.flatten(args));
@@ -283,8 +227,6 @@
         return allSharedValues;
   };
 
-  // Take the difference between one array and a number of other arrays.
-  // Only the elements present in just the first array will remain.
   _.difference = function(array) {
     var args = [].slice.call(arguments);
     var firstArray = args[0];
