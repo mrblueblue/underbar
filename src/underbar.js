@@ -185,7 +185,7 @@
     return _.map(collection, function(value){
       if (typeof functionOrKey === 'function') {
         return functionOrKey.apply(value, args);
-        } else {
+      } else {
         return value[functionOrKey].apply(value, args);
       }
     });
@@ -210,13 +210,12 @@
   _.flatten = function(nestedArray, result) {
     var result = [];
     _.each(nestedArray, function (element) {
-        if (Array.isArray(element)) {
-            result = result.concat(_.flatten(element))
-          } else {
-            result.push(element)
-          }
-    })
-
+      if (Array.isArray(element)) {
+        result = result.concat(_.flatten(element))
+      } else {
+        result.push(element);
+      }
+    });
     return result;
   };
 
@@ -224,11 +223,11 @@
     var args = [].slice.call(arguments);
     var allValues = _.uniq(_.flatten(args));
     var allSharedValues = _.filter(allValues, function (value) {
-          return !!_.every(args, function (argument) {
-            return !!_.contains(argument, value);
-          });
-        });
-        return allSharedValues;
+      return !!_.every(args, function (argument) {
+        return !!_.contains(argument, value);
+      });
+    );
+    return allSharedValues;
   };
 
   _.difference = function(array) {
