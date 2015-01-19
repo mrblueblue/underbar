@@ -204,7 +204,27 @@
   //
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
-  _.zip = function() {
+ _.zip = function() {
+      
+      var zipped = []
+      var args = [].slice.call(arguments);
+      
+      var max = _.reduce(args.slice(), function(curr, prev) {
+          return curr.length > prev.length ? curr : prev
+        })
+
+      var index = _.map(max, function(element){
+          return max.indexOf(element)
+        })
+      
+      _.each(index, function(indexValue) {
+          var zip =[]
+          _.each(args, function(array) {
+              zip.push(array[indexValue]);
+          })
+          zipped.push(zip);
+      });
+      return zipped;
   };
 
   _.flatten = function(nestedArray, result) {
@@ -226,7 +246,7 @@
       return !!_.every(args, function (argument) {
         return !!_.contains(argument, value);
       });
-    );
+    });
     return allSharedValues;
   };
 

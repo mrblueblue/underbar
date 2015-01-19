@@ -84,11 +84,10 @@
       it('should zip together arrays of different lengths', function() {
         var names = ['moe', 'larry', 'curly'], ages = [30, 40, 50], leaders = [true];
 
-        expect(_.zip(names, ages, leaders)).to.eql([
-          ['moe', 30, true],
+        expect(_.zip(names, ages, leaders)).to.eql(
+          [['moe', 30, true],
           ['larry', 40, undefined],
-          ['curly', 50, undefined]
-        ]);
+          ['curly', 50, undefined]]);
       });
     });
 
