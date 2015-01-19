@@ -12,7 +12,11 @@
   };
 
   _.last = function(array, n) {
-    return n === undefined? array[array.length -1] : array.length - n < 0 ? array : array.slice(array.length-n, array.length);
+    if (n === undefined) {
+      return array[array.length - 1]
+    } else {
+      return array.length < n ? array : array.slice(array.length-n);
+    }
   };
 
   _.each = function(collection, iterator) {
